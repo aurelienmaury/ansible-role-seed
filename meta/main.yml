@@ -1,3 +1,4 @@
+---
 galaxy_info:
   author: Aurélien Maury
   description: Installs latest Ansible and most common python dependencies for ansible modules execution
