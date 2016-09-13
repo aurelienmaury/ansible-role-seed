@@ -1,0 +1,19 @@
+galaxy_info:
+  author: Aurélien Maury
+  description: Installs latest Ansible and most common python dependencies for ansible modules execution
+  company: WeScale
+  license: GPLv3
+
+  min_ansible_version: 2.0
+
+  platforms:
+    - name: EL
+      versions:
+        - 7
+
+   - name: Debian
+     versions:
+       - wheezy
+       - jessie
+
+dependencies: []
