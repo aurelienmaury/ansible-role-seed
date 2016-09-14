@@ -57,7 +57,7 @@ Vagrant.configure(2) do |config|
 
   config.vm.provision "ansible" do |ansible|
 
-    ansible.playbook = "localhost.yml"
+    ansible.playbook = "local.yml"
     ansible.groups = {
         "boxes" => ["jessie", "bobby"],
         "all_groups:children" => ["boxes"]
