@@ -6,3 +6,5 @@ host_vars/*
 group_vars/*
 keys/*
 secrets/*
+.vagrant
+hosts

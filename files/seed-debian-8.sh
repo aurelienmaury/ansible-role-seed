@@ -7,16 +7,20 @@ if [ -d "/etc/ansible" ]; then
     exit 42
 fi
 
-
 export DEBIAN_FRONTEND=noninteractive
-apt-get update
 
-if [ -n "$(dpkg-query -l python-pip 2> /dev/null)" ]; then
+
+if [ -n "$(dpkg -l | grep exim)" ]; then
+    apt-get -o Dpkg::Options::="--force-confold" install postfix -y
+    apt-get -o Dpkg::Options::="--force-confold" remove exim4 exim4-base exim4-config exim4-daemon-light --purge -y
+fi
+
+if [ -n "$(dpkg -l | grep python-pip)" ]; then
     apt-get -o Dpkg::Options::="--force-confold" remove python-pip --purge -y
 fi
 
+apt-get update
 apt-get -o Dpkg::Options::="--force-confold" upgrade -y
-
 apt-get update
 
 apt-get -o Dpkg::Options::="--force-confold" install \
