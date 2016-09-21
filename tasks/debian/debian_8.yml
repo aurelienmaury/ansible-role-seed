@@ -1,0 +1,6 @@
+---
+- name: Seeding ansible ground
+  script: files/seed-debian-8.sh
+  register: ansible_seed
+  changed_when: ansible_seed.rc == 0
+  failed_when: ansible_seed.rc != 0 and ansible_seed.rc != 42

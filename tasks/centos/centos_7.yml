@@ -1,0 +1,6 @@
+---
+- name: Seeding ansible ground if CentOS 7
+  script: files/seed-centos-7.sh
+  register: ansible_seed
+  changed_when: ansible_seed.rc == 0
+  failed_when: ansible_seed.rc != 0 and ansible_seed.rc != 42
