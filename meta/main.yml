@@ -18,4 +18,9 @@ galaxy_info:
       versions:
         - xenial
 
+  galaxy_tags:
+    - system
+    - installer
+    - enrollment
+
 dependencies: []
