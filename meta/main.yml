@@ -1,7 +1,7 @@
 ---
 galaxy_info:
   author: Aurélien Maury
-  description: Installs latest Ansible and most common python dependencies for ansible modules execution
+  description: Make a new host meet Managed Node Requirements and installs latest Ansible.
   company: WeScale
   license: GPLv3
 
