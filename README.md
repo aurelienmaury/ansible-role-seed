@@ -1,14 +1,28 @@
 # Ansible role: seed
 
-This role is meant to be the first contact after a successfull execution of the `ping` module on 
-a managed host. It will install ansible itself and some dependencies to enable most ansible module
-execution. 
+This role is meant to make a new server meet [Managed Node Requirements](http://docs.ansible.com/ansible/intro_installation.html#managed-node-requirements),
+so you can manage it using Ansible properly. It also installs Ansible itself on the target servers.
 
-Add this to your `requirements.yml`:
+An example of using this role could be:
+
+* Add this to a `requirements.yml` file:
 ```
 - src: https://github.com/aurelienmaury/ansible-role-seed.git
   name: seed
 ```
 
-If you target a system without Python > 2.4, you should add `gather_facts: no` at the head of your playbook.
-This role will manage that for you.
+* Install via `ansible-galaxy`:
+```
+ansible-galaxy install -r requirements.yml
+```
+
+* Use it *without gathering facts*, just in case Python is absent or in the wrong version:
+```
+---
+- hosts: target_servers
+  become: true
+  gather_facts: no
+
+  roles:
+    - seed
+```
