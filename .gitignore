@@ -8,3 +8,4 @@ keys/*
 secrets/*
 .vagrant
 hosts
+*.log

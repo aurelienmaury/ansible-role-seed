@@ -3,6 +3,32 @@
 
 Vagrant.configure(2) do |config|
 
+  config.vm.define "testbox" do |debianbox|
+
+    debianbox.vm.box = "ubuntu/xenial64"
+
+    debianbox.vm.box_check_update = false
+    debianbox.vbguest.auto_update = false
+
+    debianbox.vm.network "public_network", bridge: [
+        "en1: Wi-Fi (AirPort)",
+        "en0: Ethernet",
+        "en1: Intel(R) Dual Band Wirelass-AC 8260",
+        "en0: Ethernet Connection I219-V"
+    ]
+
+    debianbox.vm.synced_folder ".", "/vagrant", disabled: true
+
+    debianbox.vm.provider "virtualbox" do |v|
+
+      v.memory = 512
+      v.cpus = 1
+      v.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
+
+    end
+
+  end
+
   config.vm.define "jessie" do |debianbox|
 
     debianbox.vm.box = "debian/jessie64"
@@ -21,34 +47,34 @@ Vagrant.configure(2) do |config|
 
     debianbox.vm.provider "virtualbox" do |v|
 
-      v.memory = 1024
-      v.cpus = 2
+      v.memory = 512
+      v.cpus = 1
       v.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
 
     end
 
   end
 
-  config.vm.define "bobby" do |centosbox|
+  config.vm.define "bobby" do |debianbox|
 
-    centosbox.vm.box = "centos/7"
+    debianbox.vm.box = "centos/7"
 
-    centosbox.vm.box_check_update = false
-    centosbox.vbguest.auto_update = false
+    debianbox.vm.box_check_update = false
+    debianbox.vbguest.auto_update = false
 
-    centosbox.vm.network "public_network", bridge: [
+    debianbox.vm.network "public_network", bridge: [
         "en1: Wi-Fi (AirPort)",
         "en0: Ethernet",
         "en1: Intel(R) Dual Band Wirelass-AC 8260",
         "en0: Ethernet Connection I219-V"
     ]
 
-    centosbox.vm.synced_folder ".", "/vagrant", disabled: true
+    debianbox.vm.synced_folder ".", "/vagrant", disabled: true
 
-    centosbox.vm.provider "virtualbox" do |v|
+    debianbox.vm.provider "virtualbox" do |v|
 
-      v.memory = 1024
-      v.cpus = 2
+      v.memory = 512
+      v.cpus = 1
       v.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
 
     end
@@ -59,7 +85,7 @@ Vagrant.configure(2) do |config|
 
     ansible.playbook = "vagrant.yml"
     ansible.groups = {
-        "boxes" => ["jessie", "bobby"],
+        "boxes" => ["testbox", "jessie", "bobby"],
         "all_groups:children" => ["boxes"]
     }
     ansible.verbose = true

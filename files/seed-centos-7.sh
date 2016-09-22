@@ -7,6 +7,8 @@ if [ -d "/etc/ansible" ]; then
     exit 42
 fi
 
+yum makecache -y
+
 yum update -y
 
 yum install \

@@ -9,3 +9,6 @@ Add this to your `requirements.yml`:
 - src: https://github.com/aurelienmaury/ansible-role-seed.git
   name: seed
 ```
+
+If you target a system without Python > 2.4, you should add `gather_facts: no` at the head of your playbook.
+This role will manage that for you.
