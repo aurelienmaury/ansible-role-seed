@@ -1,10 +1,9 @@
 #!/usr/bin/env bash
 
-function install {
 set -e
 set -x
 
-if [ -d "/etc/ansible" ]; then
+if [ -h "/usr/bin/ansible" ]; then
     exit 42
 fi
 
@@ -77,8 +76,9 @@ EOF
 cat << EOF > /etc/ansible/facts.d/ansible_pip_path.fact
 "/usr/local/lib/pyenv/shims/pip"
 EOF
-}
 
-install()
+BINARY_LIST="ansible ansible-console ansible-doc ansible-galaxy ansible-playbook ansible-pull ansible-vault pip"
 
-# test
+for binary in $BINARY_LIST; do
+    [ -h "/usr/bin/$binary" ] || ln -s /usr/local/lib/pyenv/shims/$binary /usr/bin/$binary
+done
