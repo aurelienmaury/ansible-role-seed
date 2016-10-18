@@ -1,0 +1,43 @@
+---
+- name: install lsb_release yum-based style
+  raw: >-
+    which yum && yum makecache -y && yum install redhat-lsb-core -y
+  register: yum_based
+  changed_when: no
+  failed_when: no
+
+- name: install lsb_release apt-based style
+  raw: >-
+    which apt-get && apt-get update && apt-get install lsb-release -y
+  register: apt_based
+  changed_when: no
+  failed_when: no
+
+
+- name: get distribution name from lsb_release
+  raw: >-
+    lsb_release -i | rev | cut -f1 | rev | tr '[:upper:]' '[:lower:]'
+  register: distributor_id_raw
+  failed_when: no
+
+- name: get major version number from lsb_release
+  raw: >-
+    lsb_release -r | rev | cut -f1 | rev | cut -d '.' -f1
+  register: major_version_raw
+  failed_when: no
+
+- name: cleaning distribution name and version variables
+  set_fact:
+    distributor_id: "{{ (distributor_id_raw.stdout|string).strip() }}"
+    major_version: "{{ (major_version_raw.stdout|string).strip() }}"
+
+- debug:
+    msg: "Detected seeding ground: {{ distributor_id }} {{ major_version }}"
+    verbosity: 1
+
+- name: include pre-seed tasks if needed
+  include: "{{ item }}"
+  with_first_found:
+    - files:
+        - "{{ distributor_id }}/pre_seed_{{ distributor_id }}_{{ major_version }}.yml"
+      skip: true

@@ -1,0 +1,20 @@
+---
+- name: Seeding ansible ground if CentOS 6
+  script: files/seed-centos-6.sh
+  register: ansible_seed
+  changed_when: ansible_seed.rc == 0
+  failed_when: ansible_seed.rc != 0 and ansible_seed.rc != 42
+
+- file:
+    src: "/usr/local/lib/pyenv/shims/{{ item }}"
+    dest: "/usr/bin/{{ item }}"
+    state: link
+  with_items:
+    - ansible
+    - ansible-console
+    - ansible-doc
+    - ansible-galaxy
+    - ansible-playbook
+    - ansible-pull
+    - ansible-vault
+    - pip

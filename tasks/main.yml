@@ -1,16 +1,5 @@
 ---
-- set_fact:
-    ansible_python_interpreter: /usr/bin/python2.7
-
-- raw: >-
-    test -e {{ ansible_python_interpreter }}
-    || ( sudo yum makecache -y && sudo yum install -y python2 )
-    || echo "No yum. Kthxbye."
-
-- raw: >-
-    test -e {{ ansible_python_interpreter }}
-    || ( sudo apt-get update -y && sudo apt-get install -y python2.7 )
-    || echo "No apt-get. Kthxbye."
+- include: madhat.yml
 
 - setup:
 
