@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+function install {
 set -e
 set -x
 
@@ -76,3 +77,6 @@ EOF
 cat << EOF > /etc/ansible/facts.d/ansible_pip_path.fact
 "/usr/local/lib/pyenv/shims/pip"
 EOF
+}
+
+install()
