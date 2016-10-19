@@ -1,7 +1,8 @@
 ---
-- name: Seeding ansible ground if CentOS 6
+- name: low-dependencies lsb_release installation
   script: files/seed-trunk.sh
-  changed_when: no
+  args:
+    creates: "/usr/bin/lsb_release"
 
 - name: get distribution name from lsb_release
   raw: >-
