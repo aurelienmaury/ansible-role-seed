@@ -18,6 +18,8 @@ yum install \
   sqlite-devel \
   libffi-devel \
   libselinux-python \
+  python-setuptools \
+  python-devel \
   patch \
   git \
   gcc \
@@ -30,6 +32,13 @@ yum install \
   perl-devel \
   automake \
   -y
+
+easy_install \
+    virtualenv \
+    urllib3 \
+    pyopenssl \
+    ndg-httpsclient \
+    pyasn1
 
 [ -d "/root/.ssh" ] || mkdir /root/.ssh
 
