@@ -10,6 +10,7 @@ galaxy_info:
   platforms:
     - name: EL
       versions:
+        - 6
         - 7
     - name: Debian
       versions:
