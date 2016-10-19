@@ -1,14 +1,19 @@
 ---
 - name: install lsb_release yum-based style
   raw: >-
-    which yum && yum makecache -y && yum install redhat-lsb-core -y
+    which yum
+    && sed -i -e 's/enabled=1/enabled=0/' /etc/yum/pluginconf.d/fastestmirror.conf
+    && yum makecache -y
+    && yum install redhat-lsb-core -y
   register: yum_based
   changed_when: no
   failed_when: no
 
 - name: install lsb_release apt-based style
   raw: >-
-    which apt-get && apt-get update && apt-get install lsb-release -y
+    which apt-get
+    && apt-get update
+    && apt-get install lsb-release -y
   register: apt_based
   changed_when: no
   failed_when: no
