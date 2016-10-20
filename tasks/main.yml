@@ -1,17 +1,40 @@
 ---
-- include: madhat.yml
+- name: low-dependency lsb_release install
+  script: files/seed-trunk.sh
+  args:
+    creates: "/usr/bin/lsb_release"
+
+- name: low-dependency distributor id get
+  raw: >-
+    lsb_release -i | rev | cut -f1 | rev | tr '[:upper:]' '[:lower:]'
+  register: distributor_id_raw
+  failed_when: no
+
+- name: low-dependency major version number  get
+  raw: >-
+    lsb_release -r | rev | cut -f1 | rev | cut -d '.' -f1
+  register: major_version_raw
+  failed_when: no
+
+- name: clean distributor id and major version variables
+  set_fact:
+    distributor_id: "{{ (distributor_id_raw.stdout|string).strip() }}"
+    major_version: "{{ (major_version_raw.stdout|string).strip() }}"
+
+- debug:
+    msg: "Detected seeding ground: {{ distributor_id }} {{ major_version }}"
+    verbosity: 1
+
+- name: include pre-seed tasks if needed
+  include: "{{ item }}"
+  with_first_found:
+    - files:
+        - "{{ distributor_id }}/pre_seed_{{ distributor_id }}_{{ major_version }}.yml"
+      skip: true
 
 - setup:
 
-- set_fact:
-    dist_name: "{{ ansible_distribution|lower }}"
-    dist_version: "{{ ansible_distribution_major_version }}"
-
-- debug:
-    msg: >-
-      Detected: {{ dist_name }} {{ dist_version }}
-
-- include: "{{ dist_name }}/{{ dist_name }}_{{ dist_version }}.yml"
+- include: "{{ distributor_id }}/{{ distributor_id }}_{{ major_version }}.yml"
 
 - pip:
     name: ansible
