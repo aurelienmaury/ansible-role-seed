@@ -32,15 +32,6 @@ yum install \
 
 for i in 1 2 3 4 5; do easy_install pip && break || sleep 2; done
 
-cat << EOT > /etc/pip.constraints
-pycparser == 2.13
-EOT
-
-cat << EOF > /etc/pip.conf
-[install]
-constraint = /etc/pip.constraints
-EOF
-
 pip install -U pyopenssl ndg-httpsclient pyasn1
 
 pip install -U pip ansible

@@ -61,15 +61,6 @@ pyenv install 2.7.12 --skip-existing
 
 pyenv global 2.7.12
 
-cat << EOT > /etc/pip.constraints
-pycparser == 2.13
-EOT
-
-cat << EOF > /etc/pip.conf
-[install]
-constraint = /etc/pip.constraints
-EOF
-
 eval "$(pyenv init -)"
 
 pip install -U virtualenv pyopenssl ndg-httpsclient pyasn1
