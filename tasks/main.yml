@@ -8,13 +8,13 @@
   raw: >-
     lsb_release -i | rev | cut -f1 | rev | tr '[:upper:]' '[:lower:]'
   register: distributor_id_raw
-  failed_when: no
+  changed_when: no
 
-- name: low-dependency major version number  get
+- name: low-dependency major version number get
   raw: >-
     lsb_release -r | rev | cut -f1 | rev | cut -d '.' -f1
   register: major_version_raw
-  failed_when: no
+  changed_when: no
 
 - name: clean distributor id and major version variables
   set_fact:
