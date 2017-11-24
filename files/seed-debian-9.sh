@@ -41,7 +41,7 @@ apt-get -o Dpkg::Options::="--force-confold" install \
 
 for i in 1 2 3 4 5; do easy_install pip && break || sleep 2; done
 
-pip install -U pyopenssl ndg-httpsclient pyasn1
+pip install -U pyopenssl ndg-httpsclient pyasn1 httplib2 crypto
 
 pip install -U pip ansible
 
