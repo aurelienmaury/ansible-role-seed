@@ -21,6 +21,14 @@
     distributor_id: "{{ (distributor_id_raw.stdout|string).strip() }}"
     major_version: "{{ (major_version_raw.stdout|string).strip() }}"
 
+- name: match elementary os to corresponding ubuntu version
+  set_fact:
+    distributor_id: "ubuntu"
+    major_version: "16"
+  when:
+    distributor_id: "elementary"
+    major_version: "0"
+
 - debug:
     msg: "Detected seeding ground: {{ distributor_id }} {{ major_version }}"
     verbosity: 1
