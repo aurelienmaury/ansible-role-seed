@@ -26,8 +26,8 @@
     distributor_id: "ubuntu"
     major_version: "16"
   when:
-    distributor_id: "elementary"
-    major_version: "0"
+    - distributor_id == "elementary"
+    - major_version == "0"
 
 - debug:
     msg: "Detected seeding ground: {{ distributor_id }} {{ major_version }}"
